@@ -7,16 +7,16 @@
 
 class SortingTest{
 
-    int** values[5];
+    int** values;
     int size;
 
     bool initialize();
 
-    void bubbleSort(int* val, int size);
-    void selectionSort(int* val, int size);
-    void mergeSort(int* val, int size);
-    void heapSort(int* val, int size);
-    void quickSort(int* val, int size);
+    void bubbleSort(int* val);
+    void selectionSort(int* val);
+    void mergeSort(int* val);
+    void heapSort(int* val);
+    void quickSort(int* val);
 
 
 

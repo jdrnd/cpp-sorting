@@ -6,16 +6,17 @@
 
 
 
-bool SortingTests::initialize(){
+bool SortingTest::initialize(){
 
+    int vals = 0;
+    values = new int*[5];
     do {
         std::cout << "\n Enter number of values to test sorting with: ";
 
-        int vals = 0;
-        std::cin >> val;
+        std::cin >> vals;
 
         if (vals <= 0 || vals > 65535){
-            std::cout "\n Please enter a valid size";
+            std::cout << "\n Please enter a valid size";
         }
     }while (vals <= 0 || vals > 65535);
 
@@ -32,13 +33,13 @@ bool SortingTests::initialize(){
     for (int i = 0; i<size; i++){
         randi = rand();
 
-        for (int i = 0; i<5; i++){
-            values[i] = randi;
+        for (int j = 0; j<5; j++){
+            values[j][i] = randi;
         }
     }
 }
 
-void SortingTest::bubbleSort(int *val, int size) {
+void SortingTest::bubbleSort(int *val) {
 
     int temp;
     bool swapped = true;
@@ -62,13 +63,17 @@ void SortingTest::runTest(){
 
     initialize();
 
+    std::cout << "Running Bubblesort \n"
     print(0);
-    std::cout << "\n"
+    std::cout << "\n";
     bubbleSort(values[0]);
     print(0);
+    std::cout << "\n\n";
 }
 void SortingTest::print(int i){
-    for (int j = 0; i<size; j++){
-        std::cout << values[i][j] << " ";
+    for (int j = 0; j<20; j++){
+        if (j<size) {
+            std::cout << values[i][j] << " ";
+        }
     }
 }
