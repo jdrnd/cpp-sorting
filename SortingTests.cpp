@@ -34,7 +34,7 @@ bool SortingTest::initialize(){
         randi = rand();
 
         for (int j = 0; j<5; j++){
-            values[j][i] = randi;
+            values[j][i] = (unsigned)randi;
         }
     }
 }
@@ -59,15 +59,43 @@ void SortingTest::bubbleSort(int *val) {
     }
 }
 
+void SortingTest::selectionSort(int *val) {
+
+    int min = 0;
+    int temp;
+
+    for (int i = 0; i<size; i++){
+        min = i;
+        for (int j = i; j<size; j++){
+            if (val[j] < val[min]){
+                min = j;
+            }
+        }
+
+        if (min != i){
+            temp = val[i];
+            val[i] = val[min];
+            val[min] = temp;
+        }
+    }
+}
+
 void SortingTest::runTest(){
 
     initialize();
 
-    std::cout << "Running Bubblesort \n"
+    std::cout << "Running Bubblesort \n";
     print(0);
     std::cout << "\n";
     bubbleSort(values[0]);
     print(0);
+    std::cout << "\n\n";
+
+    std::cout << "Running Selectionsort \n";
+    print(1);
+    std::cout << "\n";
+    selectionSort(values[1]);
+    print(1);
     std::cout << "\n\n";
 }
 void SortingTest::print(int i){
