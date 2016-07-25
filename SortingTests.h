@@ -19,6 +19,8 @@ class SortingTest{
     void quickSort(int* val);
 
 
+    void mergeSortRecursive(int* val, int left, int right);
+
 
     public:
         void runTest();

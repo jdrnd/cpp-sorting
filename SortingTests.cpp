@@ -80,6 +80,68 @@ void SortingTest::selectionSort(int *val) {
     }
 }
 
+void SortingTest::mergeSort(int* val){
+    mergeSortRecursive(val, 0, size-1);
+}
+
+void  SortingTest::mergeSortRecursive(int* val, int left, int right) {
+    if (left < 0 || right < 0);
+    if (left >= right) return;
+
+    // If size is 2
+    if (right == left + 1){
+        if (val[left] > val[right]){
+            int temp = val[left];
+            val[left] = val[right];
+            val[right] = temp;
+        }
+
+    }
+
+    int half = left + (right - left) / 2;
+
+    mergeSortRecursive(val, left, half);
+    mergeSortRecursive(val, half + 1, right);
+
+    int merge[right-left +1];
+
+    int r = half+1;
+    int l = left;
+
+    int temppos = 0;
+
+    while (l <= half && r <= right){
+
+        if (val[l] > val[r]){
+            merge[temppos] = val[r];
+            r++;
+        }
+        else{
+            merge[temppos] = val[l];
+            l++;
+        }
+        temppos++;
+    }
+
+    if (l <= half){
+        merge[temppos] = val[l];
+        l++;
+        temppos++;
+    }
+
+    if (r <= right){
+        merge[temppos] = val[r];
+        r++;
+        temppos++;
+    }
+
+    for (int i = 0; i < right - left +1; i++){
+        val[left + i] = merge[i];
+    }
+
+    delete[] merge;
+}
+
 void SortingTest::runTest(){
 
     initialize();
@@ -96,6 +158,13 @@ void SortingTest::runTest(){
     std::cout << "\n";
     selectionSort(values[1]);
     print(1);
+    std::cout << "\n\n";
+
+    std::cout << "Running Mergesort \n";
+    print(2);
+    std::cout << "\n";
+    mergeSort(values[2]);
+    print(2);
     std::cout << "\n\n";
 }
 void SortingTest::print(int i){
