@@ -112,6 +112,7 @@ void  SortingTest::mergeSortRecursive(int* val, int left, int right) {
 
     while (l <= half && r <= right){
 
+        // Add smallest leading value to temp, increment leading value;
         if (val[l] > val[r]){
             merge[temppos] = val[r];
             r++;
@@ -121,25 +122,27 @@ void  SortingTest::mergeSortRecursive(int* val, int left, int right) {
             l++;
         }
         temppos++;
+
+
+        // If one side finished itterate through other side
+        if (l > half){
+            for (; r<= right; r++, temppos++){
+                merge[temppos] = val[r];
+            }
+            break;
+        }
+        if (r > right){
+            for(; l <= half; l++, temppos++){
+                merge[temppos] = val[l];
+            }
+            break;
+        }
     }
 
-    if (l <= half){
-        merge[temppos] = val[l];
-        l++;
-        temppos++;
-    }
-
-    if (r <= right){
-        merge[temppos] = val[r];
-        r++;
-        temppos++;
-    }
-
+    // Copy temp array back to main
     for (int i = 0; i < right - left +1; i++){
         val[left + i] = merge[i];
     }
-
-    delete[] merge;
 }
 
 void SortingTest::runTest(){
