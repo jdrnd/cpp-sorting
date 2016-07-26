@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <stack>
+
 #include "SortingTests.h"
 
 
@@ -145,6 +147,68 @@ void  SortingTest::mergeSortRecursive(int* val, int left, int right) {
     }
 }
 
+void SortingTest::heapSort(int *val) {
+
+    int maxindex = size; // due to increased heap size
+    int heapArray[size+1];
+
+    // Shift all right by 1
+    for (int i = 0; i<size; size++){
+        heapArray[i+1] = val[i];
+    }
+
+    // Treat array as heap and heapify
+    for (int i = maxindex; i > 1; i--){
+
+        int temp = i;
+
+        while (heapArray[temp] > heapArray[temp/2]){
+            int swap = heapArray[temp];
+            heapArray[temp] = heapArray[temp/2];
+            heapArray[temp/2] = swap;
+
+            temp = temp/2;
+        }
+    }
+
+    std::stack<int> vals;
+
+    for (int i = maxindex; i > 1; i--){
+
+        vals.push(heapArray[0]);
+        heapArray[0] = heapArray[i];
+        heapArray[i] = 0;
+
+        int temp = i;
+        int tempval;
+        // Reheap down
+        while (temp <= maxindex/2){
+
+            if (heapArray[temp] > heapArray[temp*2] && heapArray[temp*2] > heapArray[2*temp + 1]){
+                tempval = heapArray[temp];
+                heapArray[temp] = heapArray[2*temp];
+                heapArray[2*temp] = tempval;
+                temp = temp*2;
+            }
+            else if (heapArray[temp] > heapArray[temp*2 + 1] && heapArray[temp*2 + 1] > heapArray[2*temp]){
+                tempval = heapArray[temp];
+                heapArray[temp] = heapArray[2*temp + 1];
+                heapArray[2*temp + 1] = tempval;
+                temp = temp*2 + 1;
+            }
+            else{
+                break; // reheap complete
+            }
+        }
+    }
+
+    // copy stack back into array
+    for (int i = 0; i<size; i++){
+        val[i] = vals.top();
+        vals.pop();
+    }
+}
+
 void SortingTest::runTest(){
 
     initialize();
@@ -168,6 +232,13 @@ void SortingTest::runTest(){
     std::cout << "\n";
     mergeSort(values[2]);
     print(2);
+    std::cout << "\n\n";
+
+    std::cout << "Running Heapsort \n";
+    print(3);
+    std::cout << "\n";
+    mergeSort(values[3]);
+    print(3);
     std::cout << "\n\n";
 }
 void SortingTest::print(int i){
