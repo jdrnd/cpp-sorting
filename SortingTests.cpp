@@ -178,10 +178,54 @@ void SortingTest::quickSort(int *val){
 
 
 void SortingTest::quickSortRecursive(int *val, int left, int right) {
+    if (left == right) return;
 
+    if (left - right == 1){
+        if (val[left] > val[right]){
+            int temp = val[left];
+            val[left] = val[right];
+            val[right] = temp;
+            return;
+        }
+        else return;
+    }
+
+
+    quicksortPartition(val, left, right);
+
+    int mid = left + (right - left)/2;
+
+    if (mid == left || mid == right) return;
+
+    quickSortRecursive(val, left, mid - 1);
+    quickSortRecursive(val, mid,right);
 }
 void SortingTest::quicksortPartition(int *val, int left, int right) {
+    int pivot = val[left];
+    int oldleft = left;
 
+    left++;
+
+    while (left < right){
+        if (val[left] < pivot) left++;
+        if (val[right] > pivot) right--;
+
+        if (left >= right) break;
+
+        if (val[right] < val[left]){
+
+            //swap
+            int temp;
+            temp = val[left];
+            val[left] = val[right];
+            val[right] = temp;
+        }
+    }
+
+    //swap pivot and high
+    int temp;
+    val[oldleft] = val[right];
+    val[right] = pivot;
 }
 
 
@@ -216,6 +260,13 @@ void SortingTest::runTest(){
     std::cout << "\n";
     heapSort(values[3]);
     print(3);
+    std::cout << "\n\n";
+
+    std::cout << "Running Quicksort \n";
+    print(4);
+    std::cout << "\n";
+    quickSort(values[4]);
+    print(4);
     std::cout << "\n\n";
 }
 void SortingTest::print(int i){
