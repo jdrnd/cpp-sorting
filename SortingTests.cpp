@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iostream>
 #include <stack>
+#include <queue>
 
 #include "SortingTests.h"
 
@@ -149,65 +150,41 @@ void  SortingTest::mergeSortRecursive(int* val, int left, int right) {
 
 void SortingTest::heapSort(int *val) {
 
-    int maxindex = size; // due to increased heap size
-    int heapArray[size+1];
+    std::priority_queue<int> queue;
 
-    // Shift all right by 1
-    for (int i = 0; i<size; size++){
-        heapArray[i+1] = val[i];
+    // Comprise a max heap/priority queue
+    for (int i=0; i<size; i++){
+        queue.push(val[i]);
     }
 
-    // Treat array as heap and heapify
-    for (int i = maxindex; i > 1; i--){
-
-        int temp = i;
-
-        while (heapArray[temp] > heapArray[temp/2]){
-            int swap = heapArray[temp];
-            heapArray[temp] = heapArray[temp/2];
-            heapArray[temp/2] = swap;
-
-            temp = temp/2;
-        }
-    }
-
-    std::stack<int> vals;
-
-    for (int i = maxindex; i > 1; i--){
-
-        vals.push(heapArray[0]);
-        heapArray[0] = heapArray[i];
-        heapArray[i] = 0;
-
-        int temp = i;
-        int tempval;
-        // Reheap down
-        while (temp <= maxindex/2){
-
-            if (heapArray[temp] > heapArray[temp*2] && heapArray[temp*2] > heapArray[2*temp + 1]){
-                tempval = heapArray[temp];
-                heapArray[temp] = heapArray[2*temp];
-                heapArray[2*temp] = tempval;
-                temp = temp*2;
-            }
-            else if (heapArray[temp] > heapArray[temp*2 + 1] && heapArray[temp*2 + 1] > heapArray[2*temp]){
-                tempval = heapArray[temp];
-                heapArray[temp] = heapArray[2*temp + 1];
-                heapArray[2*temp + 1] = tempval;
-                temp = temp*2 + 1;
-            }
-            else{
-                break; // reheap complete
-            }
-        }
-    }
-
-    // copy stack back into array
+    // Reverse order using a stack
+    std::stack<int> stack;
+    int temp;
     for (int i = 0; i<size; i++){
-        val[i] = vals.top();
-        vals.pop();
+        temp = queue.top();
+        queue.pop();
+        stack.push(temp);
+    }
+
+    for (int i=0; i<size; i++){
+        val[i] = stack.top();
+        stack.pop();
     }
 }
+
+void SortingTest::quickSort(int *val){
+    quickSortRecursive(val, 0, size - 1);
+}
+
+
+void SortingTest::quickSortRecursive(int *val, int left, int right) {
+
+}
+void SortingTest::quicksortPartition(int *val, int left, int right) {
+
+}
+
+
 
 void SortingTest::runTest(){
 
@@ -237,7 +214,7 @@ void SortingTest::runTest(){
     std::cout << "Running Heapsort \n";
     print(3);
     std::cout << "\n";
-    mergeSort(values[3]);
+    heapSort(values[3]);
     print(3);
     std::cout << "\n\n";
 }

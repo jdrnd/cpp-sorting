@@ -20,6 +20,8 @@ class SortingTest{
 
 
     void mergeSortRecursive(int* val, int left, int right);
+    void quickSortRecursive(int* val, int left, int right);
+    void quicksortPartition(int* val, int left, int right);
 
 
     public:
