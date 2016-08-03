@@ -178,54 +178,50 @@ void SortingTest::quickSort(int *val){
 
 
 void SortingTest::quickSortRecursive(int *val, int left, int right) {
-    if (left == right) return;
 
-    if (left - right == 1){
-        if (val[left] > val[right]){
-            int temp = val[left];
-            val[left] = val[right];
-            val[right] = temp;
-            return;
-        }
-        else return;
+  if (left >= right) return;
+  if (left < 0 || right < 0) return;
+
+  int pivotIndex = left;
+
+  int x,y;
+
+  x = left + 1;
+  y = right;
+
+  int temp;
+  while(true){
+
+    while(val[x] <= val[pivotIndex] && x <= right ) x++;
+    if (x >= y ) break;
+
+    while(val[y] >= val[pivotIndex] && y > x) y--;
+    if (x >= y ) break;
+
+
+    else{
+      //swap
+      temp = val[x];
+      val[x] = val[y];
+      val[y] = temp;
     }
 
+  }
 
-    quicksortPartition(val, left, right);
+  // swap pivot and position
+  if (pivotIndex != x - 1){
+    temp = val[pivotIndex];
+    val[pivotIndex] = val[x-1];
+    val[x-1] = temp;
 
-    int mid = left + (right - left)/2;
-
-    if (mid == left || mid == right) return;
-
-    quickSortRecursive(val, left, mid - 1);
-    quickSortRecursive(val, mid,right);
+    pivotIndex = x - 1;
 }
-void SortingTest::quicksortPartition(int *val, int left, int right) {
-    int pivot = val[left];
-    int oldleft = left;
 
-    left++;
 
-    while (left < right){
-        if (val[left] < pivot) left++;
-        if (val[right] > pivot) right--;
+  // recurse
+  quickSortRecursive(val, left, pivotIndex - 1);
+  quickSortRecursive(val, pivotIndex + 1, right);
 
-        if (left >= right) break;
-
-        if (val[right] < val[left]){
-
-            //swap
-            int temp;
-            temp = val[left];
-            val[left] = val[right];
-            val[right] = temp;
-        }
-    }
-
-    //swap pivot and high
-    int temp;
-    val[oldleft] = val[right];
-    val[right] = pivot;
 }
 
 
