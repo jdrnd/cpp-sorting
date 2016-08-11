@@ -4,11 +4,18 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <chrono>
 
 #include "SortingTests.h"
 
+using ms = std::chrono::milliseconds;
+using get_time = std::chrono::steady_clock;
+typedef std::chrono::steady_clock::time_point timepoint;
 
-
+SortingTest::~SortingTest(){
+  for (int i = 0; i<5; i++) delete values[i];
+  delete values;
+}
 bool SortingTest::initialize(){
 
     int vals = 0;
@@ -50,7 +57,7 @@ void SortingTest::bubbleSort(int *val) {
     while (swapped){
         swapped = false;
 
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < size -1; i++){
 
             if (val[i] > val[i+1]){
                 temp = val[i];
@@ -98,7 +105,6 @@ void  SortingTest::mergeSortRecursive(int* val, int left, int right) {
             val[left] = val[right];
             val[right] = temp;
         }
-
     }
 
     int half = left + (right - left) / 2;
@@ -230,39 +236,70 @@ void SortingTest::runTest(){
 
     initialize();
 
+    int testresults[5];
+
+
+
     std::cout << "Running Bubblesort \n";
     print(0);
     std::cout << "\n";
+    auto start = get_time::now();
     bubbleSort(values[0]);
+    auto end = get_time::now();
+    auto spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+    testresults[0] = (int)std::chrono::duration_cast<ms>(spent).count();
     print(0);
+    std::cout<< "\nTook " << testresults[0] << " ms\n";
     std::cout << "\n\n";
 
     std::cout << "Running Selectionsort \n";
     print(1);
     std::cout << "\n";
+    start = get_time::now();
     selectionSort(values[1]);
+    end = get_time::now();
+    spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+    testresults[1] = (int)std::chrono::duration_cast<ms>(spent).count();
     print(1);
+    std::cout<< "\nTook " << testresults[1] << " ms\n";
     std::cout << "\n\n";
+
 
     std::cout << "Running Mergesort \n";
     print(2);
     std::cout << "\n";
+    start = get_time::now();
     mergeSort(values[2]);
+    end = get_time::now();
+    spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+    testresults[2] = (int)std::chrono::duration_cast<ms>(spent).count();
     print(2);
+    std::cout<< "\nTook " << testresults[2] << " ms\n";
     std::cout << "\n\n";
 
     std::cout << "Running Heapsort \n";
     print(3);
     std::cout << "\n";
+    start = get_time::now();
     heapSort(values[3]);
+    end = get_time::now();
+    spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+    testresults[3] = (int)std::chrono::duration_cast<ms>(spent).count();
     print(3);
+    std::cout<< "\nTook "<< testresults[3] << " ms\n";
     std::cout << "\n\n";
+
 
     std::cout << "Running Quicksort \n";
     print(4);
     std::cout << "\n";
+    start = get_time::now();
     quickSort(values[4]);
+    end = get_time::now();
+    spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+    testresults[4] = (int)std::chrono::duration_cast<ms>(spent).count();
     print(4);
+    std::cout<< "\nTook "<< testresults[4] << " ms\n";
     std::cout << "\n\n";
 }
 void SortingTest::print(int i){
