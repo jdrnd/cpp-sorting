@@ -5,6 +5,7 @@
 #include <stack>
 #include <queue>
 #include <chrono>
+#include <stdint>
 
 #include "SortingTests.h"
 
@@ -16,17 +17,17 @@ SortingTest::~SortingTest(){
   for (int i = 0; i<5; i++) delete values[i];
   delete values;
 }
-bool SortingTest::initialize(){
 
-    int vals = 0;
+bool SortingTest::initialize(){
+    uint16_t vals = 0;
     values = new int*[5];
+    
     do {
         std::cout << "\n Enter number of values to test sorting with: ";
-
         std::cin >> vals;
 
         if (vals <= 0 || vals > 65535){
-            std::cout << "\n Please enter a valid size";
+            std::cout << "\n Please enter a valid size between 0 and 65535";
         }
     }while (vals <= 0 || vals > 65535);
 
@@ -50,7 +51,6 @@ bool SortingTest::initialize(){
 }
 
 void SortingTest::bubbleSort(int *val) {
-
     int temp;
     bool swapped = true;
 
@@ -70,7 +70,6 @@ void SortingTest::bubbleSort(int *val) {
 }
 
 void SortingTest::selectionSort(int *val) {
-
     int min = 0;
     int temp;
 
@@ -120,7 +119,6 @@ void  SortingTest::mergeSortRecursive(int* val, int left, int right) {
     int temppos = 0;
 
     while (l <= half && r <= right){
-
         // Add smallest leading value to temp, increment leading value;
         if (val[l] > val[r]){
             merge[temppos] = val[r];
@@ -155,7 +153,6 @@ void  SortingTest::mergeSortRecursive(int* val, int left, int right) {
 }
 
 void SortingTest::heapSort(int *val) {
-
     std::priority_queue<int> queue;
 
     // Comprise a max heap/priority queue
@@ -202,16 +199,14 @@ void SortingTest::quickSortRecursive(int *val, int left, int right) {
     if (x >= y ) break;
 
     while(val[y] >= val[pivotIndex] && y > x) y--;
+
     if (x >= y ) break;
-
-
     else{
       //swap
       temp = val[x];
       val[x] = val[y];
       val[y] = temp;
     }
-
   }
 
   // swap pivot and position
@@ -222,7 +217,6 @@ void SortingTest::quickSortRecursive(int *val, int left, int right) {
 
     pivotIndex = x - 1;
 }
-
 
   // recurse
   quickSortRecursive(val, left, pivotIndex - 1);
@@ -238,71 +232,69 @@ void SortingTest::runTest(){
 
     int testresults[5];
 
-
-
     std::cout << "Running Bubblesort \n";
-    print(0);
+    print_first20(0);
     std::cout << "\n";
     auto start = get_time::now();
     bubbleSort(values[0]);
     auto end = get_time::now();
     auto spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
     testresults[0] = (int)std::chrono::duration_cast<ms>(spent).count();
-    print(0);
+    print_first20(0);
     std::cout<< "\nTook " << testresults[0] << " ms\n";
     std::cout << "\n\n";
 
     std::cout << "Running Selectionsort \n";
-    print(1);
+    print_first20(1);
     std::cout << "\n";
     start = get_time::now();
     selectionSort(values[1]);
     end = get_time::now();
     spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
     testresults[1] = (int)std::chrono::duration_cast<ms>(spent).count();
-    print(1);
+    print_first20(1);
     std::cout<< "\nTook " << testresults[1] << " ms\n";
     std::cout << "\n\n";
 
 
     std::cout << "Running Mergesort \n";
-    print(2);
+    print_first20(2);
     std::cout << "\n";
     start = get_time::now();
     mergeSort(values[2]);
     end = get_time::now();
     spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
     testresults[2] = (int)std::chrono::duration_cast<ms>(spent).count();
-    print(2);
+    print_first20(2);
     std::cout<< "\nTook " << testresults[2] << " ms\n";
     std::cout << "\n\n";
 
     std::cout << "Running Heapsort \n";
-    print(3);
+    print_first20(3);
     std::cout << "\n";
     start = get_time::now();
     heapSort(values[3]);
     end = get_time::now();
     spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
     testresults[3] = (int)std::chrono::duration_cast<ms>(spent).count();
-    print(3);
+    print_first20(3);
     std::cout<< "\nTook "<< testresults[3] << " ms\n";
     std::cout << "\n\n";
 
 
     std::cout << "Running Quicksort \n";
-    print(4);
+    print_first20(4);
     std::cout << "\n";
     start = get_time::now();
     quickSort(values[4]);
     end = get_time::now();
     spent = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
     testresults[4] = (int)std::chrono::duration_cast<ms>(spent).count();
-    print(4);
+    print_first20(4);
     std::cout<< "\nTook "<< testresults[4] << " ms\n";
     std::cout << "\n\n";
 }
-void SortingTest::print(int i){
+void SortingTest::print_first20_first20(int i){
     for (int j = 0; j<20; j++){
         if (j<size) {
             std::cout << values[i][j] << " ";

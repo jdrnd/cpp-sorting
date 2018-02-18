@@ -1,2 +1,5 @@
 .idea
 CMakeLists.txt
+.gch
+sorter
+sorter.dSym/
