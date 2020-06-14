@@ -1,5 +1,13 @@
 .idea
-CMakeLists.txt
+.vscode
+build
 .gch
 sorter
+SortingTestBench
 sorter.dSym/
+SortingTest
+Makefile
+CMakeFiles
+CMakeCache.txt
+cmake*
+build

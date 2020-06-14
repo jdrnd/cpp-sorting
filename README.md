@@ -1,5 +1,8 @@
 ### Comparison of Various Sorting Algorithms in C++
-Generates a set of `n` random integers, then sorts the set using various sorting algorithms, tracking the time each algorithm takes to complete sorting
+
+#### INACTIVE PROJECT
+I wrote this in the early part of 2016 when I was taking MTE 140 (Data Structures and Algorithms) at UWaterloo. Sorting code has not been substantially modified since then, although I have moved the project to CMake and added benchmarking.
+
 Current algorithms implemented:
 - Bubble Sort
 - Selection Sort
@@ -9,6 +12,15 @@ Current algorithms implemented:
 
 
 #### Running
-1. Ensure the `clang` compiler is installed.
-2. Run the included `build.sh` script
-3. Run the produced `sorter` binary and enter the number of elements to sort
+1. `cmake .`
+2. `make`
+3. `./SortingTestBench`
+
+Sample benchmark output:
+
+![](images/bench.jpg)
+
+#### TODO
+- Figure out why the 4-year old quicksort code performs so badly compared to heapsort and mergesort
+- Counting sort
+
