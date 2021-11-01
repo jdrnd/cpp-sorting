@@ -1,16 +1,25 @@
-#include <benchmark/benchmark.h>
-#include <iostream>
-#include <cstdlib>
 #include <cassert>
+#include <cstdlib>
+#include <iostream>
+
+#include <benchmark/benchmark.h>
 
 #include "SortingTests.h"
 
-static void BM_nil(benchmark::State& state) {
+static void BM_countingSort(benchmark::State& state) {
+    srand(time(0));
+    size_t size = state.range(0);
+
+    std::vector<int> arr(size);
+    for (auto &v: arr) v = rand();
+
+    assert(!std::is_sorted(arr.begin(), arr.end()));
     for (auto _ : state) {
-        std::string empty_string;
+        countingSort(arr);
     }
+    assert(std::is_sorted(arr.begin(), arr.end()));
 }
-BENCHMARK(BM_nil);
+BENCHMARK(BM_countingSort)->Range(512, 512<<6)->Unit(benchmark::kMillisecond);
 
 static void BM_bubbleSort(benchmark::State& state) {
     srand(time(0));
@@ -47,7 +56,7 @@ static void BM_heapSort(benchmark::State& state) {
     size_t size = state.range(0);
 
     std::vector<int> arr(size);
-    for (auto &v: arr) v = rand();
+    for (auto &v : arr) { v = rand(); }
 
     assert(!std::is_sorted(arr.begin(), arr.end()));
     for (auto _ : state) {

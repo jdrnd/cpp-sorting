@@ -1,11 +1,14 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <iostream>
 #include <stack>
 #include <queue>
 #include <array>
+#include <stdio.h>
+#include <climits>
 #include <chrono>
+#include <cstring>
+#include <cmath>
 #include <cstdint>
 #include <vector>
 
@@ -138,51 +141,65 @@ void mergeSort(std::vector<int>& val){
 }
 
 void quickSortRecursive(std::vector<int>& val, int left, int right) {
-
   if (left >= right) return;
   if (left < 0 || right < 0) return;
 
-  int pivotIndex = left;
+  // Parititon
+  int pivotIndex = floor((left + right) / 2);  // Using left-most element as pivot makes it n^2
+  int pivotVal = val[pivotIndex];
 
-  int x,y;
-
-  x = left + 1;
-  y = right;
+  int i = left;  // left index
+  int j = right;  // right index
 
   int temp;
-  while(true){
+  while (true) {
+    while (val[i] < pivotVal && i < right) i++;
+    while (val[j] > pivotVal && j > left) j--;
 
-    while(val[x] <= val[pivotIndex] && x <= right ) x++;
-    if (x >= y ) break;
-
-    while(val[y] >= val[pivotIndex] && y > x) y--;
-
-    if (x >= y ) break;
-    else{
-      //swap
-      temp = val[x];
-      val[x] = val[y];
-      val[y] = temp;
+    if (i >= j) {
+      pivotIndex = j;
+      break;
+    } else {
+      // swap
+      temp = val[i];
+      val[i] = val[j];
+      val[j] = temp;
     }
   }
 
-  // swap pivot and position
-  if (pivotIndex != x - 1){
-    temp = val[pivotIndex];
-    val[pivotIndex] = val[x-1];
-    val[x-1] = temp;
-
-    pivotIndex = x - 1;
-}
-
   // recurse
-  quickSortRecursive(val, left, pivotIndex - 1);
+  quickSortRecursive(val, left, pivotIndex);
   quickSortRecursive(val, pivotIndex + 1, right);
 }
 
 
-void quickSort(std::vector<int>& val){
+void quickSort(std::vector<int>& val) {
     quickSortRecursive(val, 0, val.size() - 1);
+}
+
+void countingSort(std::vector<int>& val) {
+  std::cout << "Start: " << val.size() << std::endl;
+
+  uint* counts = new uint[UINT_MAX];
+  memset(counts, 0, UINT_MAX * sizeof(int));
+
+  for (const auto& value : val) {
+    counts[ (uint)value ]++;
+  }
+
+  uint position = 0;
+  for (uint bucket = 0; bucket < UINT_MAX; bucket++) {
+    if (counts[bucket] == 0) {
+      continue;
+    } else {
+      uint repeat = counts[bucket];
+      for (uint i = 0; i < repeat; i++) {
+        val[position] = (int) bucket;
+        position++;
+      }
+    }
+  }
+  delete counts;
 }
 
 

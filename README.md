@@ -12,15 +12,15 @@ Current algorithms implemented:
 
 
 #### Running
+1. [Install Google benchmark](https://github.com/google/benchmark#installation)
 1. `cmake .`
 2. `make`
 3. `./SortingTestBench`
 
 Sample benchmark output:
 
-![](images/bench.jpg)
+![](images/bench.png)
 
 #### TODO
-- Figure out why the 4-year old quicksort code performs so badly compared to heapsort and mergesort
-- Counting sort
+- More efficient counting sort
 
