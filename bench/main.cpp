@@ -19,7 +19,7 @@ static void BM_countingSort(benchmark::State& state) {
     }
     assert(std::is_sorted(arr.begin(), arr.end()));
 }
-BENCHMARK(BM_countingSort)->Range(512, 512<<6)->Unit(benchmark::kMillisecond);
+BENCHMARK(BM_countingSort)->Range(512, 512<<12)->Unit(benchmark::kMillisecond);
 
 static void BM_bubbleSort(benchmark::State& state) {
     srand(time(0));

@@ -5,6 +5,7 @@
 #include <queue>
 #include <array>
 #include <stdio.h>
+#include <map>
 #include <climits>
 #include <chrono>
 #include <cstring>
@@ -178,28 +179,37 @@ void quickSort(std::vector<int>& val) {
 }
 
 void countingSort(std::vector<int>& val) {
-  std::cout << "Start: " << val.size() << std::endl;
-
-  uint* counts = new uint[UINT_MAX];
-  memset(counts, 0, UINT_MAX * sizeof(int));
+  std::map<int, uint> counts;
 
   for (const auto& value : val) {
-    counts[ (uint)value ]++;
+    if (counts.count(value) == 0) { counts[value] = 1; } 
+    else {
+      counts[value]++;
+    }
   }
 
   uint position = 0;
-  for (uint bucket = 0; bucket < UINT_MAX; bucket++) {
-    if (counts[bucket] == 0) {
-      continue;
-    } else {
-      uint repeat = counts[bucket];
-      for (uint i = 0; i < repeat; i++) {
-        val[position] = (int) bucket;
-        position++;
-      }
+  for (const auto& pair : counts) {
+    uint count = pair.second;
+    for (int i = 0; i < count; i++) {
+      val[position] = pair.first;
+      position++;
     }
   }
-  delete counts;
+
+  // uint position = 0;
+  // for (uint bucket = 0; bucket < UINT_MAX; bucket++) {
+  //   if (counts[bucket] == 0) {
+  //     continue;
+  //   } else {
+  //     uint repeat = counts[bucket];
+  //     for (uint i = 0; i < repeat; i++) {
+  //       val[position] = (int) bucket;
+  //       position++;
+  //     }
+  //   }
+  // }
+  // delete counts;
 }
 
 
